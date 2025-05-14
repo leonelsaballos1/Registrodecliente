@@ -3,46 +3,48 @@ import { StyleSheet, Text, View, TextInput, Button, Alert } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import { useNavigation } from '@react-navigation/native';
 
-export default function App() {
+
+export default function RegistrarCliente({ route }) {
+
+  const { guardarNuevo } = route.params;
+
   const [cedula, setCedula] = useState('');
   const [nombres, setNombres] = useState('');
   const [apellidos, setApellidos] = useState('');
   const [fechaNacimiento, setFechaNacimiento] = useState('');
   const [sexo, setSexo] = useState('');
-  const [clientes, setClientes] = useState([]);
+
 
   const navigation = useNavigation(); 
 
   const Guardar = () => {
     if (!cedula || !nombres) return null;
+
+    
     const nuevoCliente = {
-      nuevacedula: cedula,
-      nuevosnombres: nombres,
-      nuevosapellidos: apellidos,
-      nuevafechanac: fechaNacimiento,
-      nuevosexo: sexo,
+      cedula: cedula,
+      nombres: nombres,
+      apellidos: apellidos,
+      fechanac: fechaNacimiento,
+      sexo: sexo,
     };
 
-    setClientes([nuevoCliente, ...clientes]);
-    Alert.alert('Datos almacenados', `
-      Cédula: ${cedula}
-      Nombres: ${nombres}
-      Apellidos: ${apellidos}
-      Fecha Nacimiento: ${fechaNacimiento}
-      Sexo: ${sexo}
-    `);
-
+    guardarNuevo(nuevoCliente);
+    Alert.alert('Datos almacenados');
     setCedula('');
     setNombres('');
     setApellidos('');
     setFechaNacimiento('');
     setSexo('');
+
+    navigation.goBack();
   };
 
   
 
   return (
-    <View style={styles.contenedor}>
+    <View style={styles.contenedor}> 
+    <Text style={styles.label}>Rejistro de Datos de clientes</Text>
       <Text style={styles.label}>Cédula:</Text>
       <TextInput
         style={styles.input}
@@ -89,19 +91,12 @@ export default function App() {
 
 <View style={styles.botonSeparado}>
   <Button
-    title="Guardar Cliente"
+    title="ListarClientes"
     onPress={Guardar}
     color="green"
   />
 </View>
 
-<View style={styles.botonSeparado}>
-  <Button
-    title="Listar Clientes"
-    onPress={() => navigation.navigate('ListarClientes', { clientes })}
-    color="orange"
-  />
-</View>
 
     </View>
   );
