@@ -1,12 +1,5 @@
 import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  FlatList,
-  StyleSheet,
-  Alert,
-  TouchableOpacity,
-} from 'react-native';
+import { View, Text, FlatList, StyleSheet, Alert, TouchableOpacity, } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 
 export default function ListarClientes({ navigation }) {
